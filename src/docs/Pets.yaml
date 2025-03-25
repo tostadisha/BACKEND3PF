@@ -1,0 +1,289 @@
+paths:
+  /api/pets:
+    get:
+      tags:
+        - Pets
+      summary: Obtener todas las mascotas
+      description: Devuelve una lista con todas las mascotas registradas.
+      responses:
+        "200":
+          description: Lista de mascotas obtenida exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Pet"
+        "404":
+          description: No se encontraron mascotas.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: No se encontraron mascotas
+        "400":
+          description: Error al obtener mascotas.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Error interno del servidor.
+
+    post:
+      tags:
+        - Pets
+      summary: Crear una nueva mascota
+      description: Crea una nueva mascota sin imagen.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PetInput"
+      responses:
+        "201":
+          description: Mascota creada exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    $ref: "#/components/schemas/Pet"
+        "400":
+          description: Valores incompletos o error al crear mascota.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Error interno del servidor.
+
+  /api/pets/{pid}:
+    put:
+      tags:
+        - Pets
+      summary: Actualizar una mascota
+      description: Actualiza los datos de una mascota por su ID.
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID de la mascota a actualizar.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Campos a actualizar.
+              properties:
+                name:
+                  type: string
+                  example: Pedrito
+      responses:
+        "200":
+          description: Mascota actualizada exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Mascota actualizada
+                  payload:
+                    $ref: "#/components/schemas/Pet"
+        "404":
+          description: No se encontraron mascotas.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: Mascota no encontrada
+        "400":
+          description: Error al actualizar mascota.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Error interno del servidor.
+
+    delete:
+      tags:
+        - Pets
+      summary: Eliminar una mascota
+      description: Elimina una mascota por su ID.
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID de la mascota a eliminar.
+      responses:
+        "200":
+          description: Mascota eliminada exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Mascota borrada
+                  payload:
+                    $ref: "#/components/schemas/Pet"
+        "404":
+          description: Mascota no encontrada.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: Mascota no encontrada
+        "400":
+          description: Error al eliminar mascota.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Error interno del servidor.
+
+  /api/pets/withimage:
+    post:
+      tags:
+        - Pets
+      summary: Crear mascota con imagen
+      description: Crea una mascota incluyendo una imagen subida como archivo.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - name
+                - specie
+              properties:
+                name:
+                  type: string
+                specie:
+                  type: string
+                birthDate:
+                  type: string
+                file:
+                  type: string
+      responses:
+        "201":
+          description: Mascota creada exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    $ref: "#/components/schemas/Pet"
+        "400":
+          description: Valores incompletos o error al crear mascota.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Error interno del servidor.
+
+components:
+  schemas:
+    Pet:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 605c5c8d3f1f5e3b2c8f1c9a
+        name:
+          type: string
+          example: Firulais
+        specie:
+          type: string
+          example: Perro
+        birthDate:
+          type: string
+          example: 2020-01-01
+        image:
+          type: string
+          example: /public/img/firulais.png
+    PetInput:
+      type: object
+      required:
+        - name
+        - specie
+        - birthDate
+      properties:
+        name:
+          type: string
+          example: Firulais
+        specie:
+          type: string
+          example: Perro
+        birthDate:
+          type: string
+          example: 2020-01-01
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+          example: error
+        error:
+          type: string
+          example: Descripción del error.
+    ErrorNotFound:
+      type: object
+      properties:
+        status:
+          type: string
+          example: error
+        message:
+          type: string
+          example: No se encontró el recurso solicitado.

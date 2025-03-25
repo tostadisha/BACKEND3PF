@@ -1,0 +1,133 @@
+/adoptions:
+  get:
+    summary: Obtener todas las adopciones
+    tags:
+      - Adoptions
+    responses:
+      "200":
+        description: Lista de adopciones obtenida correctamente
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  example: success
+                payload:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Adoption"
+      "400":
+        description: Error al obtener las adopciones
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Error"
+
+/adoptions/{aid}:
+  get:
+    summary: Obtener una adopción por su ID
+    tags:
+      - Adoptions
+    parameters:
+      - in: path
+        name: aid
+        schema:
+          type: string
+        required: true
+        description: ID de la adopción
+    responses:
+      "200":
+        description: Adopción obtenida correctamente
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  example: success
+                payload:
+                  $ref: "#/components/schemas/Adoption"
+      "404":
+        description: Adopción no encontrada
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Error"
+      "400":
+        description: Error al obtener la adopción
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Error"
+
+/adoptions/{uid}/{pid}:
+  post:
+    summary: Crear una adopción
+    tags:
+      - Adoptions
+    parameters:
+      - in: path
+        name: uid
+        schema:
+          type: string
+        required: true
+        description: ID del usuario
+      - in: path
+        name: pid
+        schema:
+          type: string
+        required: true
+        description: ID de la mascota
+    responses:
+      "200":
+        description: Adopción creada correctamente
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  example: success
+                message:
+                  type: string
+                  example: Pet adopted
+      "404":
+        description: Usuario o mascota no encontrados
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Error"
+      "400":
+        description: Error al crear la adopción
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    Adoption:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "642b4f2c7b8e3b8f8f8f8f8f"
+        owner:
+          type: string
+          example: "642b4f2c7b8e3b8f8f8f8f8a"
+        pet:
+          type: string
+          example: "642b4f2c7b8e3b8f8f8f8f8b"
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+          example: error
+        error:
+          type: string
+          example: Mensaje de error

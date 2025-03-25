@@ -1,16 +1,17 @@
-
 import GenericRepository from "./GenericRepository.js";
 
-export default class UserRepository extends GenericRepository{
-    constructor(dao){
-        super(dao);
-    }
-    
-    getUserByEmail = (email) =>{
-        return this.getBy({email});
-    }
-    getUserById = (id) =>{
-        return this.getBy({_id:id})
-    }
-    
+export default class UserRepository extends GenericRepository {
+  constructor(dao) {
+    super(dao);
+  }
+
+  getUserByEmail = (email) => {
+    return this.getBy({ email });
+  };
+  getUserById = (id) => {
+    return this.getBy({ _id: id });
+  };
+  addDocument = (id, docs) => {
+    return this.dao.addDocument(id, docs);
+  };
 }
