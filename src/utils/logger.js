@@ -23,8 +23,11 @@ const customLevelsOptions = {
 const loggerProduction = winston.createLogger({
   levels: customLevelsOptions.levels,
   transports: [
-    new winston.transports.File({
-      filename: "logs/error.log",
+    new winston.transports.Console({
+      format: winston.format.combine(
+        winston.format.colorize({ colors: customLevelsOptions.colors }),
+        winston.format.simple()
+      ),
       level: "warn",
     }),
   ],
