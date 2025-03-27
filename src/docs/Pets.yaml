@@ -76,7 +76,7 @@ paths:
           description: Error interno del servidor.
 
   /api/pets/{pid}:
-    put:
+    patch:
       tags:
         - Pets
       summary: Actualizar una mascota
