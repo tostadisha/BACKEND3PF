@@ -94,8 +94,6 @@ const deleteUser = async (req, res) => {
 
 const addDocument = async (req, res) => {
   try {
-    console.log(req.body);
-    console.log(req.files);
     const userId = req.params.uid;
     const files = req.files;
     if (!files) {

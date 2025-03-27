@@ -48,8 +48,6 @@ describe("Testing adoptions", () => {
     const { statusCode, ok, _body } = await request.post(
       `/api/adoptions/${uid}/${pid}`
     );
-    console.log("AHI VA EL PAYLOAD");
-    console.log(_body);
     const {
       statusCode: statusCode2,
       ok: ok2,
