@@ -1,4 +1,4 @@
-/adoptions:
+/api/adoptions:
   get:
     summary: Obtener todas las adopciones
     tags:
@@ -25,7 +25,7 @@
             schema:
               $ref: "#/components/schemas/Error"
 
-/adoptions/{aid}:
+/api/adoptions/{aid}:
   get:
     summary: Obtener una adopción por su ID
     tags:
@@ -63,7 +63,7 @@
             schema:
               $ref: "#/components/schemas/Error"
 
-/adoptions/{uid}/{pid}:
+/api/adoptions/{uid}/{pid}:
   post:
     summary: Crear una adopción
     tags:
