@@ -13,8 +13,6 @@ describe("Testing adoptions", () => {
     const { statusCode, ok, _body } = await request.post(
       `/api/adoptions/${uid}/${pid}`
     );
-    console.log("Testing 1");
-    console.log(_body);
     expect(statusCode).to.equal(201);
     expect(ok).to.equal(true);
     expect(_body).to.have.property("status", "success");

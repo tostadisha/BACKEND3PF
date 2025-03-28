@@ -12,8 +12,6 @@ describe("User DTO", () => {
       __v: 0,
     };
     const result = new userDTO(user);
-    console.log("El DTO es  ");
-    console.log(result);
     expect(result.name).to.equal(`${user.first_name} ${user.last_name}`);
   });
   it("El DTO debe eliminar las propiedades innecesarias comoo password, first_name, last_name", () => {

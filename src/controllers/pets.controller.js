@@ -126,8 +126,6 @@ const createPetWithImage = async (req, res) => {
     const file = req.file;
     const { name, specie, birthDate } = req.body;
     logger.info(`Creando mascota ${name} con imagen...`);
-    console.log("Los campos que me llegan son:");
-    console.log(name, specie, birthDate);
     if (!name || !specie || !birthDate) {
       logger.debug("createPetWithImage - Datos incompletos");
       return res
